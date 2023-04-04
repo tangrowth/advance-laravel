@@ -11,7 +11,7 @@ class AuthorController extends Controller
         $authors = Author::all();
         return view('index', ['authors' => $authors]);
     }
-    
+
     public function add(){
         return view('add');
     }
@@ -32,6 +32,18 @@ class AuthorController extends Controller
         $form = $request->all();
         unset($form['_token']);
         Author::find($request->id)->update($form);
+        return redirect('/');
+    }
+
+    public function delete(Request $request)
+    {
+        $author = Author::find($request->id);
+        return view('delete', ['author' => $author]);
+    }
+
+     public function remove(Request $request)
+    {
+        Author::find($request->id)->delete();
         return redirect('/');
     }
 }
